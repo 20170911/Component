@@ -1,0 +1,6 @@
+include ':module_main'
+include ':module_login'
+include ':module_resources'
+include ':module_base'
+include ':app'
+rootProject.name = "Component"

@@ -1,0 +1,66 @@
+if (rootProject.ext.isModule) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    resourcePrefix "main_"
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner rootProject.ext.android.testInstrumentationRunner
+    }
+
+    buildTypes {
+        release {
+            debuggable rootProject.ext.android.releaseDebuggable
+            jniDebuggable rootProject.ext.android.releaseDebuggable
+            zipAlignEnabled rootProject.ext.android.releaseZipAlignEnabled
+            if (rootProject.ext.isModule) {
+                shrinkResources rootProject.ext.android.releaseShrinkResources
+            }
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable rootProject.ext.android.debugDebuggable
+            jniDebuggable rootProject.ext.android.debugDebuggable
+            zipAlignEnabled rootProject.ext.android.debugZipAlignEnabled
+            if (rootProject.ext.isModule) {
+                shrinkResources rootProject.ext.android.debugShrinkResources
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            if (rootProject.ext.isModule) {
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                //集成开发模式下排除module文件夹中的所有文件
+                java {
+                    exclude 'module/**'
+                }
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.java.sourceCompatibility
+        targetCompatibility rootProject.ext.java.targetCompatibility
+    }
+}
+
+dependencies {
+    implementation project(':module_base')
+}

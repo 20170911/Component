@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner rootProject.ext.android.testInstrumentationRunner
+    }
+}
+
+dependencies {
+    api project(':module_resources')
+
+    api fileTree(dir: "libs", include: ["*.jar"])
+    api "androidx.appcompat:appcompat:$rootProject.ext.dependencies.appcompatVersion"
+    api "androidx.core:core-ktx:$rootProject.ext.dependencies.corektxVersion"
+    api "androidx.constraintlayout:constraintlayout:$rootProject.ext.dependencies.constraintlayoutVersion"
+    api "junit:junit:$rootProject.ext.dependencies.junitVersion"
+    api "androidx.test:runner:$rootProject.ext.dependencies.runnerVersion"
+    api "androidx.test.espresso:espresso-core:$rootProject.ext.dependencies.espressocoreVersion"
+
+    api "androidx.multidex:multidex:$rootProject.ext.dependencies.multidexVersion"
+    api "com.alibaba:arouter-api:$rootProject.ext.dependencies.arouterApiVersion"
+}
